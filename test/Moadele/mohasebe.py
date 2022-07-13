@@ -97,20 +97,26 @@ def mosavi_helper (vorodi):
         vorodi = re.sub(r'\d+\s*\\\\\s*\d+' , str(y) , vorodi)
 
     while '/' in vorodi:
-        x = re.findall(r'(\d+)\s\/\/\s*(\d+)' , vorodi)
+        x = re.findall(r'(\d+)\s*\/\s*(\d+)' , vorodi)
         x = x[0]
         y = mohasebe( [ int (x [0]) , int (x [1]) ] , taghsim)
-        vorodi = re.sub(r'\d+\s*\/\/\s*\d+' , str(y) , vorodi)
+        vorodi = re.sub(r'\d+\s*\/\s*\d+' , str(y) , vorodi)
 
     while '+' in vorodi:
         x = re.findall(r'(\d+)\s*\+\s*(\d+)' , vorodi)
-        x = x[0]
+        if x == []:
+            break
+        else:
+            x = x[0]
         y = mohasebe( [ int (x [0]) , int (x [1]) ] , jam)
         vorodi = re.sub(r'\d+\s*\+\s*\d+' , str(y) , vorodi)
 
     while '-' in vorodi:
         x = re.findall(r'(\d+)\s*\-\s*(\d+)' , vorodi)
-        x = x[0]
+        if x == []:
+            break
+        else:
+            x = x[0]
         y = mohasebe( [ int (x [0]) , int (x [1]) ] , tafrigh)
         vorodi = re.sub(r'\d+\s*\-\s*\d+' , str(y) , vorodi)
 
