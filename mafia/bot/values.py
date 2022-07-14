@@ -1,6 +1,6 @@
 ## help
 
-def sql_connect (user_name='Erfan' , password_user='nohack' , db='mafia'):
+def sql_connect (user_name='Erfan' , password_user='erfan2325' , db='mafia'):
     from mysql.connector import connect
     return connect(user=user_name , password=password_user , database=db)
 

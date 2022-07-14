@@ -23,6 +23,8 @@ def random_string ():
 
 def jaigozari (vorodi):
 
+    vorodi = str(vorodi)
+    x = ''
     number = {
         '0' : '۰',
         '1' : '۱',
@@ -35,8 +37,6 @@ def jaigozari (vorodi):
         '8' : '۸',
         '9' : '۹',
         '.' : ''}
-    x = ''
-    vorodi = str(vorodi)
 
     for har in vorodi:
         x = x + number[har]
@@ -50,17 +50,17 @@ def writer (text , loc , back_salsh=True , mode='a'):
             File.write('\n')
         File.close()
 
-def writer_DB (table:str , w_values , values_r , database = 'mafia'):
+def writer_SQL (table:str , w_values , values_r , database = 'mafia'):
     from mysql.connector import connect
-    DB = connect(user='Erfan' , password='nohack' , database=database)
+    SQL = values.sql_connect(db=database)
     if type(values_r) == type('a'):
         values_r = list([values_r])
     if type(w_values) == type('a'):
         w_values = list([w_values])
-    cursor = DB.cursor()
+    cursor = SQL.cursor()
     cursor.execute('INSERT INTO %s (%s) VALUES ("%s")' % (table , ','.join(w_values) , '\",\"'.join(values_r)))
-    DB.commit()
-    DB.close()
+    SQL.commit()
+    SQL.close()
 
 def game_loop (karbar):
     from class_bot import defs
