@@ -1,5 +1,8 @@
 # + - * /
 
+from collections import OrderedDict
+import re
+
 def parantez (vorodi): # برای گذاشتن ضرب بین پرانتز ها
     vorodi = vorodi.replace(')(' , ')*(')
     vorodi = vorodi.replace(') (' , ')*(')
@@ -187,9 +190,9 @@ def parantezs (vorodi):
             break
         else:
             x = in_parantez[0]
-        adad = mosavi_helper(x)
-        adad = re.findall(r'\d+' , adad)[0]
-        vorodi = re.sub(r'\(.+?\)' , str(adad) , vorodi , 1)
+            adad = mosavi_helper(x)
+            adad = re.findall(r'\d+' , adad)[0]
+            vorodi = re.sub(r'\(.+?\)' , str(adad) , vorodi , 1)
 
     return mosavi_helper (vorodi)
 
@@ -233,22 +236,14 @@ def Run():
         else:
             print ('chi?')
 
-
-# مقدار دهی و import کردن
-
-from collections import OrderedDict
-import re
-
-vorodi = None
-while vorodi != 'exit':
+def moadele(vorodi:str):
 
     # گرفتن ورودی و تجزیه آن
-
-    vorodi = input('Enter your moadele: ')
-
+    if vorodi == 'exit':
+        exit()
     if vorodi == '':
-        print ('Please enter something')
-        continue
+        return 'Please enter something'
+
     vorodi_h = vorodi
     vorodi = vorodi.split('=')
     vorodi_1 = vorodi[0]
@@ -272,16 +267,19 @@ while vorodi != 'exit':
 
             paian = mosavi(a , b)[0] # برسی مساوی بودن دو طرف معادله
             if paian:
-                my_dict[x] = y # اضافه کردن اعداد صحیح به لیست برای نشان دادن
+                return x , y
+                # my_dict[x] = y # اضافه کردن اعداد صحیح به لیست برای نشان دادن
 
-    harf = re.findall(r'([a-zA-Z])' , vorodi_h)
-    print (harf)
+    # harf = re.findall(r'([a-zA-Z])' , vorodi_h)
+    # print (harf)
 
     # از اینجا بنویس
 
-    if my_dict != OrderedDict():
-        for har_OK in my_dict: # نوشتن اعداد درست
-            print ('%s is %i  and  %s is %i' % (harf[0] , har_OK , harf[1] , my_dict[har_OK]))
+    # if my_dict != OrderedDict():
+    #     for har_OK in my_dict: # نوشتن اعداد درست
+    #         print ('%s is %i  and  %s is %i' % (harf[0] , har_OK , harf[1] , my_dict[har_OK]))
 
-    else:
-        print ('No Math')
+    # else:
+    #     print ('No Math')
+
+print(moadele('x-(2+4)+3=y-(5+0)'))
