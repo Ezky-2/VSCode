@@ -19,6 +19,14 @@ def parantez (vorodi): # برای گذاشتن ضرب بین پرانتز ها
     
     return vorodi
 
+def mazrab_harf_ha (vorodi): # برای گذاشتن ضرب پشت مجهول ها
+    x = re.findall(r'\d+\w' , vorodi)
+    for har_moshkel in x:
+        a = re.findall(r'\d+' , har_moshkel)[0]
+        b = re.findall(r'\d+(\w)' , har_moshkel)[0]
+        vorodi = re.sub(a+b , a+'*'+b , vorodi)
+    return vorodi
+
 def harf_ha_def (vorodi): # برای پیدا کردن مجهول ها مثل x , y | a ,b 
     l = []
     x = (re.findall(r'([a-zA-Z])' , vorodi))
@@ -57,126 +65,101 @@ def jaigozari (vorodi , adad_1 , adad_2 , vorodi_harf):
     return true
 
 def jam (n1 , n2):
-    return n1 - (- n2)
+    return n1 + n2
 
 def tafrigh (n1 , n2):
-    return n1 + (~n2 + 1)
+    return n1 - n2
 
 def zarb (n1 , n2):
-    mul = 0
-    if n2 < 0:
-        n2 = -n2
-        n1 = -n1
-    for i in range(1 , n2 + 1):
-        mul = mul + n1
-    return mul
+    return n1 * n2
 
 def taghsim (n1 , n2):
-    neg = False
-    peg = 0
-
-    if n1 == 0 or n2 == 0:
-        return 0
-    
-    if n1 < 0:
-        n1 = -n1
-        neg = True
-        if n2 < 0:
-            n2 = -n2
-            neg = False
-
-    if n2 < 0:
-        n2 = -n2
-        neg = True
-        if n1 < 0:
-            n1 = -n1
-            neg = False
-
-    while n1 >= n2:
-        n1 -= n2
-        peg += 1
-
-    if neg:
-        peg = -peg
-    return peg
+    return n1 / n2
 
 def tavan (n1 , n2):
-    sho = n1
-    neg = False
-
-    if n1 == 0 and n2 == 0:
-        return 0
-    if n1 == 0 or n2 == 0:
-        return 1
-
-    if n1 < 0:
-        n1 = -n1
-        neg = True
-        if n2 < 0:
-            n2 = -n2
-            neg = False
-
-    if n2 < 0:
-        n2 = -n2
-        neg = True
-        if n1 < 0:
-            n1 = -n1
-            neg = False
-
-    for a in range(1,n2):
-        sho = sho * n1
-    
-    if neg:
-        sho = -sho
-    return sho
+    return n1 ** n2
 
 def mohasebe (vorodi , alamat):
     return (alamat(int(vorodi[0]) , int(vorodi[1])))
 
+def last_tavan (vorodi):
+    x = re.findall(r'(\d+)\s*\*\*\s*(\d+)' , vorodi)
+    x = x[0]
+    y = mohasebe( [ int (x [0]) , int (x [1]) ] , tavan)
+    vorodi = re.sub(r'%s\s*\*\*\s*%s' %(x[0] , x[1]) , str(y) , vorodi)
+
+    return vorodi
+
+def last_zarb (vorodi):
+    x = re.findall(r'(\d+)\s*\*\s*(\d+)' , vorodi)
+    x = x[0]
+    y = mohasebe( [ int (x [0]) , int (x [1]) ] , zarb)
+    vorodi = re.sub(r'%s\s*\*\s*%s' %(x[0] , x[1]) , str(y) , vorodi)
+    return vorodi
+
+def last_taghsim_1 (vorodi):
+    x = re.findall(r'(\d+)\s*\\\\\s*(\d+)' , vorodi)
+    x = x[0]
+    y = mohasebe( [ int (x [0]) , int (x [1]) ] , taghsim)
+    vorodi = re.sub(r'%s\s*\\\\\s*%s' %(x[0] , x[1]) , str(y) , vorodi)
+
+    return vorodi
+
+def last_taghsim_2 (vorodi):
+    x = re.findall(r'(\d+)\s*\/\s*(\d+)' , vorodi)
+    x = x[0]
+    y = mohasebe( [ int (x [0]) , int (x [1]) ] , taghsim)
+    vorodi = re.sub(r'%s\s*\/\s*%s' %(x[0] , x[1]) , str(y) , vorodi)
+
+    return vorodi
+
+def last_jam (vorodi):
+    x = re.findall(r'(\d+)\s*\+\s*(\d+)' , vorodi)
+    if x == []:
+        return vorodi
+    else:
+        x = x[0]
+    y = mohasebe( [ int (x [0]) , int (x [1]) ] , jam)
+    vorodi = re.sub(r'%s\s*\+\s*%s' %(x[0] , x[1]) , str(y) , vorodi)
+
+    return vorodi
+
+def last_tafrigh (vorodi):
+    x = re.findall(r'(\d+)\s*\-\s*(\d+)' , vorodi)
+    if x == []:
+        return vorodi
+    else:
+        x = x[0]
+    y = mohasebe( [ int (x [0]) , int (x [1]) ] , tafrigh)
+    vorodi = re.sub(r'%s\s*\-\s*%s' %(x[0] , x[1]) , str(y) , vorodi)
+
+    return vorodi
+
 def mosavi_helper (vorodi):
     import re
+    list_alamat_ha = list()
 
-    while '**' in vorodi:
-        x = re.findall(r'(\d+)\s*\*\*\s*(\d+)' , vorodi)
-        x = x[0]
-        y = mohasebe( [ int (x [0]) , int (x [1]) ] , tavan)
-        vorodi = re.sub(r'\d+\s*\*\*\s*\d+' , str(y) , vorodi)
+    # برای پیدا کردن علامت های ورودی
+    list_alamat_ha_ba_space = re.findall(r'\D' , vorodi)
+    for har_alamat in list_alamat_ha_ba_space:
+        if har_alamat != ' ':
+            list_alamat_ha.append(har_alamat)
 
-    while '*' in vorodi:
-        x = re.findall(r'(\d+)\s*\*\s*(\d+)' , vorodi)
-        x = x[0]
-        y = mohasebe( [ int (x [0]) , int (x [1]) ] , zarb)
-        vorodi = re.sub(r'\d+\s*\*\s*\d+' , str(y) , vorodi)
+    for har_alamat in list_alamat_ha:
+        if har_alamat == '*' or har_alamat == '\\' or har_alamat == '/':
+            if har_alamat == '*':
+                vorodi = last_zarb(vorodi)
+            elif har_alamat == '\\':
+                vorodi = last_taghsim_1(vorodi)
+            elif har_alamat == '/':
+                vorodi = last_taghsim_2(vorodi)
 
-    while '\\' in vorodi:
-        x = re.findall(r'(\d+)\s*\\\\\s*(\d+)' , vorodi)
-        x = x[0]
-        y = mohasebe( [ int (x [0]) , int (x [1]) ] , taghsim)
-        vorodi = re.sub(r'\d+\s*\\\\\s*\d+' , str(y) , vorodi)
-
-    while '/' in vorodi:
-        x = re.findall(r'(\d+)\s*\/\s*(\d+)' , vorodi)
-        x = x[0]
-        y = mohasebe( [ int (x [0]) , int (x [1]) ] , taghsim)
-        vorodi = re.sub(r'\d+\s*\/\s*\d+' , str(y) , vorodi)
-
-    while '+' in vorodi:
-        x = re.findall(r'(\d+)\s*\+\s*(\d+)' , vorodi)
-        if x == []:
-            break
-        else:
-            x = x[0]
-        y = mohasebe( [ int (x [0]) , int (x [1]) ] , jam)
-        vorodi = re.sub(r'\d+\s*\+\s*\d+' , str(y) , vorodi)
-
-    while '-' in vorodi:
-        x = re.findall(r'(\d+)\s*\-\s*(\d+)' , vorodi)
-        if x == []:
-            break
-        else:
-            x = x[0]
-        y = mohasebe( [ int (x [0]) , int (x [1]) ] , tafrigh)
-        vorodi = re.sub(r'\d+\s*\-\s*\d+' , str(y) , vorodi)
+    for har_alamat in list_alamat_ha:
+        if har_alamat == '-' or har_alamat == '+':
+            if har_alamat == '-':
+                vorodi = last_tafrigh(vorodi)
+            if har_alamat == '+':
+                vorodi = last_jam(vorodi)
 
     return vorodi
 
@@ -214,48 +197,21 @@ def mosavi (vorodi_aval , vorodi_dovom):
     else:
         paian_2 = parantezs(vorodi_dovom)
 
-    paian_1 = int(paian_1)
-    paian_2 = int(paian_2)
+    paian_1 = float(paian_1)
+    paian_2 = float(paian_2)
+
 
     if paian_1 == paian_2:
         return [True  , paian_1 , paian_2]
     else:
         return [False , paian_1 , paian_2]
 
-def Run():
-    vorodi = input('Enter your moadele: ')
-    vorodi = vorodi.split('=')
-    TOF = mosavi(vorodi[0] , vorodi[1])
-    if TOF[0]:
-        print (TOF[1] , '=' , TOF[2])
-    else:
-        if TOF[1] > TOF[2]:
-            print (TOF[1] , '>' , TOF[2])
-        elif TOF[1] < TOF[2]:
-            print (TOF[1] , '<' , TOF[2])
-        else:
-            print ('chi?')
-
-def moadele(vorodi:str):
-
-    # گرفتن ورودی و تجزیه آن
-    if vorodi == 'exit':
-        exit()
-    if vorodi == '':
-        return 'Please enter something'
-
+def moadele(vorodi:str , vorodi_range_1 , vorodi_range_2):
+    
     vorodi_h = vorodi
     vorodi = vorodi.split('=')
-    vorodi_1 = vorodi[0]
-    vorodi_2 = vorodi[1]
-
-    vorodi_1 = parantez(vorodi_1)
-    vorodi_2 = parantez(vorodi_2)
-
-    vorodi_range_1 = 100
-    vorodi_range_2 = 100
-
-    # start
+    vorodi_1 = mazrab_harf_ha(parantez(vorodi[0]))
+    vorodi_2 = mazrab_harf_ha(parantez(vorodi[1]))
 
     my_dict = OrderedDict()
 
@@ -267,19 +223,32 @@ def moadele(vorodi:str):
 
             paian = mosavi(a , b)[0] # برسی مساوی بودن دو طرف معادله
             if paian:
-                return x , y
-                # my_dict[x] = y # اضافه کردن اعداد صحیح به لیست برای نشان دادن
+                my_dict[x] = y # اضافه کردن اعداد صحیح به لیست برای نشان دادن
 
-    # harf = re.findall(r'([a-zA-Z])' , vorodi_h)
-    # print (harf)
+    harf = re.findall(r'([a-zA-Z])' , vorodi_h)
 
-    # از اینجا بنویس
+    if my_dict != OrderedDict():
+        return my_dict , harf
 
-    # if my_dict != OrderedDict():
-    #     for har_OK in my_dict: # نوشتن اعداد درست
-    #         print ('%s is %i  and  %s is %i' % (harf[0] , har_OK , harf[1] , my_dict[har_OK]))
+    else:
+        return 'No Math'
 
-    # else:
-    #     print ('No Math')
+# توی ران همه چی هست خودت رابط بساز
 
-print(moadele('x-(2+4)+3=y-(5+0)'))
+def Run(vorodi:str=False , vorodi_range_1:int=10 , vorodi_range_2:int=10 , returnable=False):
+
+    # گرفتن ورودی و تجزیه آن
+    if not vorodi:
+        vorodi = input('Enter your moadele: ')
+
+    if vorodi == 'exit':
+        exit()
+    if vorodi == '':
+        return 'Please enter something'
+
+    if returnable:
+        return moadele(vorodi , vorodi_range_1 , vorodi_range_2)
+    else:
+        print (moadele(vorodi , vorodi_range_1 , vorodi_range_2)[0])
+
+# Run()
