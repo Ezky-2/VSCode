@@ -153,7 +153,7 @@ class defs:
         dideban   = ','.join( sample( ['tizbin'       , 'radgir'   ] , 1))                       # دیدهبان ها
         plus      = ','.join( sample( ['ghebgo'       , 'zerehposh'] , 1))                       # کمکی ها
         mostaghel = ','.join( sample( ['gorgine'      , 'ghatel'  , 'joker'   ] , 1))            # مستقل ها
-        sabet     = ','.join( sample( ['pedar_khande' , 'sniper' , 'bazpors' ] , 3))            # ثابت ها
+        sabet     = ','.join( sample( ['pedar_khande' , 'sniper' , 'bazpors' ] , 3))             # ثابت ها
         mafia     = ','.join( sample( ['haker'        , 'noche'   , 'maftesh' , 'shaiad' ] , 1)) # مافیا ها
 
         List_karakters = (jon + ',' + dideban + ',' + mostaghel + ',' + sabet + ',' + mafia + ',' + plus).split(',')

@@ -50,8 +50,7 @@ def writer (text , loc , back_salsh=True , mode='a'):
             File.write('\n')
         File.close()
 
-def writer_SQL (table:str , w_values , values_r , database = 'mafia'):
-    from mysql.connector import connect
+def writer_SQL (table:str , w_values , values_r , database = values.database_bot()):
     SQL = values.sql_connect(db=database)
     if type(values_r) == type('a'):
         values_r = list([values_r])
@@ -118,7 +117,7 @@ def game_loop (karbar):
 
         if message['body'][0:6] == '//vote_':
             vote = message['body'][6:]
-            
+
 
 
 

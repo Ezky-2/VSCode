@@ -1,23 +1,36 @@
-## help
+# changable
 
-def sql_connect (user_name='Erfan' , password_user='erfan2325' , db='mafia'):
-    from mysql.connector import connect
-    return connect(user=user_name , password=password_user , database=db)
-
-def bot_token ():
-    return '2WOP8fzYbhTz50TDJHH1LZb7KCBQBvSXaTq6YOWAnk0JsqNSCIjMqJn4Y18eC3tCRLEjtmmJayhEu3x94UpCp_-6xpTgxTVH6FacY8XFB6MUgss1fvtyd-t-OCpV6UUJwsWmyQhnDrILgBfV'
-
-def me_token ():
-    return 'X1vMEU95qyK2PG3jRMOFYgqACr6HU5YWqG_ROUzYmQXJwADY4yN_K3qYY5Y'
+def database_bot ():
+    return 'mafia'
 
 def table_users ():
     return 'Users'
 
+def me_token ():
+    return 'X1vMEU95qyK2PG3jRMOFYgqACr6HU5YWqG_ROUzYmQXJwADY4yN_K3qYY5Y'
+
+def bot_token ():
+    return '2WOP8fzYbhTz50TDJHH1LZb7KCBQBvSXaTq6YOWAnk0JsqNSCIjMqJn4Y18eC3tCRLEjtmmJayhEu3x94UpCp_-6xpTgxTVH6FacY8XFB6MUgss1fvtyd-t-OCpV6UUJwsWmyQhnDrILgBfV'
+
 def table_list_servers ():
     return 'ServerRunning'
 
+def database_user_name ():
+    return 'Erfan'
+
+def database_password_user ():
+    return 'erfan2325'
+
+#data or defs
+
+def sql_connect (user_name=database_user_name() , password_user=database_password_user() , db=database_bot()):
+    from mysql.connector import connect
+    return connect(user=user_name , password=password_user , database=db)
+
 def regex_not_persion ():
     return r"[^۱۲۳۴۵۶۷۸۹۰آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی\s]+"
+
+# keyboards
 
 def game_loop_keyboard_init ():
     return[ [{'text' : 'جادو ها' , 'command' : '//magics' } , {'text' : 'خروج از بازی' , 'command' : '//exit_game'}] ]

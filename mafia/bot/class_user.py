@@ -62,7 +62,7 @@ class user:
                     cursor.execute('INSERT INTO %s (ID , Name) VALUES ("%s" , "%s")' % (values.table_users , self.ID , name_karbar))
                     SQL.commit()
 
-                    t = 'حالا دیگه عضو بازی شدی می تونی وارد بازی بشی و بقیه رو دعوت کنی تا سکه بگیری \nراستی ۲۰ تا سکه هم برای عضو شدنت به حسابت اضافه شد'
+                    t = 'حالا دیگه عضو بازی شدی می تونی وارد بازی بشی و بقیه رو دعوت کنی تا سکه بگیری \nراستی ۵۰ تا سکه هم برای عضو شدنت به حسابت اضافه شد'
                     bot.send_message(self.ID , t)
 
                     cursor.execute('SELECT * FROM %s WHERE ID="%s"' %(values.table_users() , self.ID))
