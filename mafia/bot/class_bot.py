@@ -30,8 +30,8 @@ class defs:
     def magics_game (self , karbar):
         pass
 
-    def exit_game (self , karbar:user , server , bot , keyboard=None):
-        user_id = karbar
+    def exit_game (self , karbar:user , server , keyboard=None):
+        user_id = karbar.ID
         tmp_keyboard = [[{'text' : 'بله' , 'command' : '//yes_exit'} , {'text' : 'نه' , 'command' : '//no_exit'}]]
         self.send_message(user_id , 'ایا مطمعن به خروج از بازی هستید؟' , tmp_keyboard)
         for message in self.get_message():
@@ -39,7 +39,7 @@ class defs:
                 if message['body'] == '//yes_exit':
                     cursor.execute('DELETE FROM %s WHERE ID="%s"' % (server.server_name , user_id))
                     t_m = 'کاربر %s از بازی خارج شد' % karbar.name # tmp_message
-                    bot.send_group(server.all , 'سیستم' , t_m , keyboard)
+                    self.send_group(server.all , 'سیستم' , t_m , keyboard)
                     return True
 
                 if message['body'] == '//no_exit':
@@ -109,7 +109,7 @@ class defs:
                     self.send_message(user_id , tmp_message , tmp_keyboard)
 
     def amtiaz_hai_karbar (self , karbar):
-        cursor.execute('SELECT Amtiaz , TDavat , TCoin FROM %s WHERE ID="%s"' %(values.table_users() , karbar.ID))
+        cursor.execute('SELECT Amtiaz , tedad_davat , tedad_seke FROM %s WHERE ID="%s"' %(values.table_users() , karbar.ID))
         data = cursor.fetchall()[0]
         tmp = 'امتیاز شما هست: %i\nتعداد نفرات دعوت شده توسط شما هست: %i\nنعداد سکه های شما هست: %i' % (data[0] , data[1] , data[2])
         self.send_message(karbar.ID , tmp)

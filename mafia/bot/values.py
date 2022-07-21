@@ -10,7 +10,7 @@ def me_token ():
     return 'X1vMEU95qyK2PG3jRMOFYgqACr6HU5YWqG_ROUzYmQXJwADY4yN_K3qYY5Y'
 
 def bot_token ():
-    return '2WOP8fzYbhTz50TDJHH1LZb7KCBQBvSXaTq6YOWAnk0JsqNSCIjMqJn4Y18eC3tCRLEjtmmJayhEu3x94UpCp_-6xpTgxTVH6FacY8XFB6MUgss1fvtyd-t-OCpV6UUJwsWmyQhnDrILgBfV'
+    return 'yIB5iKxaP8wAunOi7GhS5PYSteIa_gQHspgJcbjq9MRn_0yp0cZ5uXEjp4Q4o8OUvtUdHpLCzVcCMdlQ4Gt_CsDsqKAyX6xXUwpnGLVOTy3Ot4j9JNT9th3nTpCzydIOeIQu2vZqvDg4GNUC'
 
 def table_list_servers ():
     return 'ServerRunning'
