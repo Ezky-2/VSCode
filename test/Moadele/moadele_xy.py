@@ -233,22 +233,23 @@ def moadele(vorodi:str , vorodi_range_1 , vorodi_range_2):
     else:
         return 'No Math'
 
-# توی ران همه چی هست خودت رابط بساز
-
 def Run(vorodi:str=False , vorodi_range_1:int=10 , vorodi_range_2:int=10 , returnable=False):
 
-    # گرفتن ورودی و تجزیه آن
+    # check if we have vorodi or not
     if not vorodi:
         vorodi = input('Enter your moadele: ')
-
+    # close moadele
     if vorodi == 'exit':
         exit()
+    # check vorodi
     if vorodi == '':
         return 'Please enter something'
+    if '=' not in vorodi:
+        return 'invalid vorodi'
 
     if returnable:
         return moadele(vorodi , vorodi_range_1 , vorodi_range_2)
     else:
         print (moadele(vorodi , vorodi_range_1 , vorodi_range_2)[0])
 
-# Run()
+Run()

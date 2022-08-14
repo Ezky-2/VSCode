@@ -179,3 +179,5 @@ def Run():
             print ('chi?')
 
 # print (mosavi('(13 + 11)*1*(5 + 6)' , '200 + 60 + 4'))
+
+Run()

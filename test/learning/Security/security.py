@@ -1,12 +1,13 @@
-def writer(x):
-    import hashlib
-    t = x.encode()
-    y = hashlib.sha512(t).hexdigest()
-    t2 = hashlib.sha512(t).hexdigest()
+import hashlib
+
+def writer(vorodi):
+    y = hashlib.sha512(vorodi.encode()).hexdigest()
+    t2 = hashlib.sha512(vorodi.encode()).hexdigest()
     y = y + t2
     counter = 0
     e = ''
-    for a in x:
+
+    for a in vorodi:
         counter += 1
         e = e + str(a) + str(y[counter])
 
@@ -24,5 +25,5 @@ def reader(x):
     print (''.join(l) , '\n')
 
 x = input('hello: ')
-reader(x)
-
+y = writer(x)
+reader(y)
