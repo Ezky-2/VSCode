@@ -1,15 +1,26 @@
 from hashlib import sha256
-from collections import OrderedDict
+import re
 
 def hash_lib (file):
+
+    # read hash file
     with open(file , 'r') as vorodi:
-        print (vorodi)
-        vorodi = vorodi.read()
-        for har in vorodi:
-            print (har)
+        hashs = []
+        vorodi = vorodi.readlines()
+        for har_hash in vorodi:
+            hashs.append(re.sub(r'\,' , '' ,re.sub(r'\s*' , '' , har_hash)))
 
+    # create possible hash and password
+    hash_pass = dict()
+    for har_adad in range(0,1001):
+        hash_adad = sha256(str(har_adad).encode()).hexdigest()
+        hash_pass[hash_adad] = har_adad
 
-hash_lib('hash.csv')
+    for har_vorodi in hashs:
+        if har_vorodi in hash_pass:
+            print (har_vorodi , hash_pass[har_vorodi])
+
+hash_lib('/home/Erfan/VSCode/VSCode/test/learning/Security/hash.csv')
 
 
 

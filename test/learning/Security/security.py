@@ -1,17 +1,48 @@
 import hashlib
+import re
+import random
 
-def writer(vorodi):
-    y = hashlib.sha512(vorodi.encode()).hexdigest()
-    t2 = hashlib.sha512(vorodi.encode()).hexdigest()
-    y = y + t2
+def random_string (tedad:int=10):
+    from string import ascii_letters
+    from random import choice
+    return ''.join(choice(ascii_letters) for i in range(tedad))
+
+def hidder(vorodi:str):
+    # reverse
+
+    vorodi = re.sub(r'' , ',' , vorodi).split(',')
+    vorodi.reverse()
+
+    # replace
+
+    vor = ''
+    letter = {
+        'a':'d' ,
+        'b':'c' ,
+        'c':'b' ,
+        'd':'a' ,}
+    for har_harf in vorodi:
+        if har_harf in letter:
+            vor += letter[har_harf]
+        else:
+            vor += har_harf
+    vorodi = vor
+
+    # signture # _!
+
+    return vorodi
+
+def writer(vorodi:str):
+
+    vorodi = hidder(vorodi)
+
     counter = 0
     e = ''
-
+    random_str = random_string(len(vorodi) + 1)
     for a in vorodi:
         counter += 1
-        e = e + str(a) + str(y[counter])
+        e = e + str(a) + str(random_str[counter])
 
-    print ('\n' , e)
     return (e)
 
 def reader(x):
@@ -22,8 +53,10 @@ def reader(x):
             l.append(a)
         c += 1
 
-    print (''.join(l) , '\n')
+    return (''.join(l) , '\n')
 
 x = input('hello: ')
+# x = 'hide me'
 y = writer(x)
 reader(y)
+print (y)
