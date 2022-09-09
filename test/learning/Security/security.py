@@ -18,9 +18,12 @@ def hidder(vorodi:str):
     vor = ''
     letter = {
         'a':'d' ,
-        'b':'c' ,
+        'd':'a' ,
         'c':'b' ,
-        'd':'a' ,}
+        'b':'c' ,
+        'h':'j' ,
+        'j':'h' ,
+        }
     for har_harf in vorodi:
         if har_harf in letter:
             vor += letter[har_harf]
@@ -52,11 +55,32 @@ def reader(x):
         if c / 2 == c // 2:
             l.append(a)
         c += 1
+    l = ''.join(l)
 
-    return (''.join(l) , '\n')
+    vorodi = l
+
+    vor = ''
+    letter = {
+        'a':'d' ,
+        'd':'a' ,
+        'c':'b' ,
+        'b':'c' ,
+        'h':'j' ,
+        'j':'h' ,
+        }
+    for har_harf in vorodi:
+        if har_harf in letter:
+            vor += letter[har_harf]
+        else:
+            vor += har_harf
+
+    vor = re.sub(r'' , ',' , vor).split(',')
+    vor.reverse()
+
+    return ''.join(vor)
 
 x = input('hello: ')
 # x = 'hide me'
 y = writer(x)
-reader(y)
 print (y)
+print (reader(y))
