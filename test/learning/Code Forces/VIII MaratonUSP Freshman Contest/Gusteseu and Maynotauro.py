@@ -1,4 +1,4 @@
-from math import factorial as factorial
+from math import factorial
 
 def factorial_calc (first_variable , second_variable , third_variable , fourth_variable):
     upper_case = factorial(first_variable + second_variable - third_variable - fourth_variable)
