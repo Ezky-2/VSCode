@@ -5,9 +5,9 @@ from requests import get
 
 def connector_sql ():
     table = 'testsqlmariadb2021erfan'
-    user = input('نام کاربری دی بی را وارد کنید: ')
-    password = input('پسورد را وارد کنید: ')
-    database = input('دیتابیس را وارد کنید: ')
+    user = 'root'
+    password = 'erfan2325'
+    database = 'python'
     print ()
 
     SQL = mysql.connector.connect(
@@ -15,20 +15,6 @@ def connector_sql ():
         password=password ,
         database=database)
 
-    print ('اتصال موفقیت امیز بود' , end='\n\n')
-
-    print ('ایا می خواهید برنامه خودش تیبل را درست کند ؟')
-    x = input('y or n: ')
-    if x == 'y':
-        try:
-            curser = SQL.cursor()
-            curser.execute('CREATE TABLE testsqlmariadb2021erfan (DDR int , MHz int , model int , zarfiat int , ghimat int)')
-            print ('ساخت تیبل موفقیت امیز بود')
-        except:
-            print ('ساختن تیبل موفقیت امیز نبود' , end='\n\n')
-            table = input('لطفا تیبل را وارد نمایید: ')
-    else:
-        table = input('لطفا تیبل را وارد نمایید: ')
     return SQL , table
 
 SQL , table = connector_sql()
@@ -64,11 +50,11 @@ for page in range (1,11):
     print('page %s is reading' % str(page))
 
     counter = 0
-    URL = 'https://www.digikala.com/search/category-ram/?pageno=%s' % str(page)
+    URL = 'https://www.digikala.com/search/category-ram/?page=%s' % str(page)
     vorodi = get(URL)
 
-    soup = BeautifulSoup(vorodi.text , 'html.parser')
-    all_ghimat = soup.find_all('div' , {"class" : "c-price__value-wrapper"})
+    soup = BeautifulSoup(vorodi.text , 'html5lib')
+    all_ghimat = soup.find_all('div' , {"class" : "d-flex ai-center jc-end gap-1 color-700 color-400 text-h5 grow-1"})
     tree = len(all_ghimat)
     if tree == 0:
         continue
